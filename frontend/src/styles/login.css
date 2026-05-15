@@ -1,0 +1,232 @@
+/* ==== PAGE BACKGROUND ==== */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #d9e6ff, #a7c3ff);
+    height: 100%;
+  }
+  
+  /* ==== CENTER BOX ==== */
+  .login-container {
+    width: 380px;
+    margin: 80px auto;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 18px;
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* ==== HEADING ==== */
+  .login-title {
+    text-align: center;
+    font-size: 26px;
+    color: #1a4db3;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .login-subtitle {
+    text-align: center;
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  /* ==== INPUT FIELDS ==== */
+  .input-box {
+    margin-bottom: 20px;
+  }
+  
+  .input-label {
+    display: block;
+    margin-bottom: 6px;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 12px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    font-size: 15px;
+  }
+  
+  .input-field:focus {
+    border-color: #1a4db3;
+    box-shadow: 0 0 4px #1a4db3;
+  }
+  
+  /* ==== CHECKBOX ==== */
+  .options-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 15px;
+  }
+  
+  .forgot-link {
+    color: #1a4db3;
+    text-decoration: none;
+  }
+  
+  /* ==== BUTTON ==== */
+  .login-btn {
+    width: 100%;
+    padding: 12px;
+    background: #1a4db3;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .login-btn:hover {
+    background: #163f8f;
+  }
+  
+  /* ==== SIGN UP LINK ==== */
+  .sign-up-text {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 14px;
+  }
+  
+  .sign-up-text a {
+    color: #1a4db3;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  /* ==== ERROR BOX ==== */
+  .error-box {
+    background: #ffdada;
+    padding: 10px;
+    border-radius: 8px;
+    color: #d80000;
+    margin-bottom: 15px;
+    border: 1px solid #ffb1b1;
+  }
+
+  
+  /* PAGE BACKGROUND */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* CARD */
+.login-card {
+  width: 380px;
+  background: #ffffff;
+  padding: 28px 32px;
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* HEADINGS */
+.login-heading {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #222;
+}
+
+.login-subtitle {
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* ERROR */
+.login-error {
+  background: #ffe0e0;
+  color: #b10000;
+  padding: 8px 10px;
+  border-radius: 5px;
+  font-size: 13px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+/* FORM */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  font-size: 13px;
+  margin-bottom: 4px;
+  color: #444;
+}
+
+.input-group input,
+.input-group select {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  outline: none;
+  border-color: #2c5364;
+}
+
+/* BUTTON */
+.login-btn {
+  margin-top: 10px;
+  padding: 10px;
+  background: #2c5364;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.login-btn:hover {
+  background: #1f3b4d;
+}
+
+.login-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* FOOTER */
+.login-footer {
+  text-align: center;
+  font-size: 13px;
+  margin-top: 16px;
+}
+
+.login-footer a {
+  color: #2c5364;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-footer a:hover {
+  text-decoration: underline;
+}
