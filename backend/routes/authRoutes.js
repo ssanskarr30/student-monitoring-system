@@ -5,167 +5,213 @@ import User from "../models/User.js";
 
 const router = express.Router();
 
-/* ================================
+/* =========================================
    LOGIN
-================================ */
-router.post("/login", async (req, res) => {
+========================================= */
+router.post(
+  "/login",
+  async (req, res) => {
 
-  try {
+    try {
 
-    const { email, password } =
-      req.body;
-
-    const user =
-      await User.findOne({ email });
-
-    if (!user) {
-
-      return res.status(401).json({
-        message: "Invalid credentials",
-      });
-
-    }
-
-    const match =
-      await bcrypt.compare(
+      const {
+        email,
         password,
-        user.password
-      );
+      } = req.body;
 
-    if (!match) {
+      const user =
+        await User.findOne({
+          email,
+        });
 
-      return res.status(401).json({
-        message: "Invalid credentials",
-      });
+      if (!user) {
 
-    }
+        return res.status(401).json({
+          message:
+            "Invalid credentials",
+        });
 
-    const token = jwt.sign(
-      {
-        id: user._id,
-        role: user.role,
-      },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "1d",
       }
-    );
 
-    res.json({
-      token,
+      const match =
+        await bcrypt.compare(
+          password,
+          user.password
+        );
 
-      user: {
-        _id: user._id,
+      if (!match) {
 
-        name: user.name,
+        return res.status(401).json({
+          message:
+            "Invalid credentials",
+        });
 
-        email: user.email,
+      }
 
-        role: user.role,
+      const token = jwt.sign(
+        {
+          id: user._id,
+          role: user.role,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "1d",
+        }
+      );
 
-        rollNo: user.rollNo,
-
-        branch: user.branch,
-
-        semester: user.semester,
-
-        mentorEmail:
-          user.mentorEmail || null,
-
-        mentorName:
-          user.mentorName || null,
-
-        fatherName:
-          user.fatherName || "",
-
-        motherName:
-          user.motherName || "",
-
-        personalPhone:
-          user.personalPhone || "",
-
-        parentPhone:
-          user.parentPhone || "",
-
-        address:
-          user.address || "",
-
-        phoneVerified:
-          user.phoneVerified || false,
-
-        firstLogin:
-          user.firstLogin,
-
-        mustChangePassword:
-          user.mustChangePassword,
-      },
-    });
-
-  } catch (err) {
-
-    res.status(500).json({
-      message: err.message,
-    });
-
-  }
-
-});
-
-/* ================================
-   AUTH ME
-================================ */
-router.get("/me", async (req, res) => {
-
-  try {
-
-    const auth =
-      req.headers.authorization;
-
-    if (!auth) {
-
-      return res.status(401).json({
-        message: "No token",
-      });
-
-    }
-
-    const token =
-      auth.split(" ")[1];
-
-    const decoded =
-      jwt.verify(
+      res.json({
         token,
-        process.env.JWT_SECRET
-      );
 
-    const user =
-      await User.findById(
-        decoded.id
-      );
+        user: {
+          _id: user._id,
 
-    if (!user) {
+          name: user.name,
 
-      return res.status(404).json({
-        message: "User not found",
+          email: user.email,
+
+          role: user.role,
+
+          studentType:
+            user.studentType,
+
+          rollNo:
+            user.rollNo,
+
+          branch:
+            user.branch,
+
+          semester:
+            user.semester,
+
+          mentorEmail:
+            user.mentorEmail,
+
+          mentorName:
+            user.mentorName,
+
+          fatherName:
+            user.fatherName,
+
+          motherName:
+            user.motherName,
+
+          personalPhone:
+            user.personalPhone,
+
+          parentPhone:
+            user.parentPhone,
+
+          address:
+            user.address,
+
+          phoneVerified:
+            user.phoneVerified,
+
+          firstLogin:
+            user.firstLogin,
+
+          mustChangePassword:
+            user.mustChangePassword,
+
+          /* =================================
+             PHD DATA
+          ================================= */
+          researchArea:
+            user.researchArea,
+
+          researchTopic:
+            user.researchTopic,
+
+          supervisorEmail:
+            user.supervisorEmail,
+
+          supervisorName:
+            user.supervisorName,
+
+          publications:
+            user.publications,
+
+          synopsisApproved:
+            user.synopsisApproved,
+
+          thesisSubmitted:
+            user.thesisSubmitted,
+        },
+      });
+
+    } catch (err) {
+
+      res.status(500).json({
+        message:
+          err.message,
       });
 
     }
 
-    res.json(user);
+  }
+);
 
-  } catch (err) {
+/* =========================================
+   AUTH ME
+========================================= */
+router.get(
+  "/me",
+  async (req, res) => {
 
-    res.status(401).json({
-      message: "Invalid token",
-    });
+    try {
+
+      const auth =
+        req.headers.authorization;
+
+      if (!auth) {
+
+        return res.status(401).json({
+          message:
+            "No token",
+        });
+
+      }
+
+      const token =
+        auth.split(" ")[1];
+
+      const decoded =
+        jwt.verify(
+          token,
+          process.env.JWT_SECRET
+        );
+
+      const user =
+        await User.findById(
+          decoded.id
+        );
+
+      if (!user) {
+
+        return res.status(404).json({
+          message:
+            "User not found",
+        });
+
+      }
+
+      res.json(user);
+
+    } catch (err) {
+
+      res.status(401).json({
+        message:
+          "Invalid token",
+      });
+
+    }
 
   }
+);
 
-});
-
-/* ================================
+/* =========================================
    CHANGE PASSWORD
-================================ */
+========================================= */
 router.post(
   "/change-password",
   async (req, res) => {
@@ -202,7 +248,8 @@ router.post(
     } catch (err) {
 
       res.status(500).json({
-        message: err.message,
+        message:
+          err.message,
       });
 
     }
@@ -210,9 +257,9 @@ router.post(
   }
 );
 
-/* ================================
+/* =========================================
    UPDATE PROFILE
-================================ */
+========================================= */
 router.put(
   "/user-by-email/:email",
   async (req, res) => {
@@ -221,19 +268,25 @@ router.put(
 
       const user =
         await User.findOne({
-          email: req.params.email,
+          email:
+            req.params.email,
         });
 
       if (!user) {
 
         return res.status(404).json({
-          message: "User not found",
+          message:
+            "User not found",
         });
 
       }
 
+      /* =================================
+         COMMON
+      ================================= */
       user.name =
-        req.body.name || user.name;
+        req.body.name ||
+        user.name;
 
       user.fatherName =
         req.body.fatherName ||
@@ -255,6 +308,35 @@ router.put(
         req.body.address ||
         user.address;
 
+      /* =================================
+         PHD
+      ================================= */
+      user.researchArea =
+        req.body.researchArea ||
+        user.researchArea;
+
+      user.researchTopic =
+        req.body.researchTopic ||
+        user.researchTopic;
+
+      user.supervisorName =
+        req.body.supervisorName ||
+        user.supervisorName;
+
+      user.supervisorEmail =
+        req.body.supervisorEmail ||
+        user.supervisorEmail;
+
+      if (
+        req.body.publications !==
+        undefined
+      ) {
+
+        user.publications =
+          req.body.publications;
+
+      }
+
       await user.save();
 
       res.json({
@@ -265,7 +347,8 @@ router.put(
     } catch (err) {
 
       res.status(500).json({
-        message: err.message,
+        message:
+          err.message,
       });
 
     }
@@ -273,26 +356,29 @@ router.put(
   }
 );
 
-/* ================================
+/* =========================================
    SEND OTP
-================================ */
+========================================= */
 router.post(
   "/send-phone-otp",
   async (req, res) => {
 
     try {
 
-      const { userId } = req.body;
+      const { userId } =
+        req.body;
 
       const otp = Math.floor(
         100000 +
-          Math.random() * 900000
+          Math.random() *
+            900000
       ).toString();
 
-      const expiry = new Date(
-        Date.now() +
-          5 * 60 * 1000
-      );
+      const expiry =
+        new Date(
+          Date.now() +
+            5 * 60 * 1000
+        );
 
       await User.findByIdAndUpdate(
         userId,
@@ -324,25 +410,30 @@ router.post(
   }
 );
 
-/* ================================
+/* =========================================
    VERIFY OTP
-================================ */
+========================================= */
 router.post(
   "/verify-phone-otp",
   async (req, res) => {
 
     try {
 
-      const { userId, otp } =
-        req.body;
+      const {
+        userId,
+        otp,
+      } = req.body;
 
       const user =
-        await User.findById(userId);
+        await User.findById(
+          userId
+        );
 
       if (!user) {
 
         return res.status(404).json({
-          message: "User not found",
+          message:
+            "User not found",
         });
 
       }
