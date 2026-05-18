@@ -1,18 +1,27 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider, AuthContext } from "./context/AuthContext";
 
-/* ---------------------------------------
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+
+import {
+  AuthProvider,
+  AuthContext,
+} from "./context/AuthContext";
+
+/* =========================================
    AUTH
----------------------------------------- */
+========================================= */
 import Signup from "./pages/Auth/Signup";
 import Login from "./pages/Auth/Login";
 import ChangePassword from "./pages/Auth/ChangePassword";
 
-
-/* ---------------------------------------
+/* =========================================
    STUDENT
----------------------------------------- */
+========================================= */
 import StudentDashboard from "./pages/Student/StudentDashboard";
 import Profile from "./pages/Student/Profile";
 import FormsList from "./pages/Student/FormsList";
@@ -24,9 +33,19 @@ import StudentMeetingForm from "./pages/Student/StudentMeetingForm";
 import StudentMeetings from "./pages/Student/Meetings";
 import Notifications from "./pages/Student/Notifications";
 
-/* ---------------------------------------
+/* =========================================
+   PHD
+========================================= */
+import PhdDashboard from "./pages/Phd/PhdDashboard";
+import ResearchProgress from "./pages/Phd/ResearchProgress";
+import Publications from "./pages/Phd/Publications";
+import ThesisTracking from "./pages/Phd/ThesisTracking";
+import PhdMeetings from "./pages/Phd/PhdMeetings";
+import PhdProfile from "./pages/Phd/Profile";
+
+/* =========================================
    MENTOR
----------------------------------------- */
+========================================= */
 import MentorDashboard from "./pages/Mentor/MentorDashboard";
 import MentorStudents from "./pages/Mentor/Students";
 import MentorMessages from "./pages/Mentor/MentorMessages";
@@ -35,62 +54,125 @@ import MentorSemesterResults from "./pages/Mentor/MentorSemesterResults";
 import MentorMeetingHistory from "./pages/Mentor/MentorMeetingHistory";
 import MentorMeetingRequests from "./pages/Mentor/MentorMeetingRequests";
 
-/* ---------------------------------------
+/* =========================================
    HOD
----------------------------------------- */
+========================================= */
 import HodDashboard from "./pages/Hod/HodDashboard";
 import AssignMentor from "./pages/Hod/AssignMentor";
 import HodUploadStudents from "./pages/Hod/HodUploadStudents";
 import HodUploadMentors from "./pages/Hod/HodUploadMentors";
 
-/* ---------------------------------------
+/* =========================================
    ADMIN
----------------------------------------- */
+========================================= */
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import ManageUsers from "./pages/Admin/Users";
 import AdminCourses from "./pages/Admin/AdminCourses";
 import CreateUser from "./pages/Admin/CreateUser";
 
-
-import PhdDashboard from "./pages/Phd/PhdDashboard";
-
-/* ---------------------------------------
+/* =========================================
    PROTECTED ROUTE
----------------------------------------- */
-function ProtectedRoute({ children, allowed }) {
-  const { user, loading } = React.useContext(AuthContext);
+========================================= */
+function ProtectedRoute({
+  children,
+  allowed,
+}) {
 
-  if (loading) return <div>Loading...</div>;
+  const {
+    user,
+    loading,
+  } = React.useContext(AuthContext);
 
-  if (!user) return <Navigate to="/login" replace />;
+  if (loading) {
 
-  if (!allowed.includes(user.role)) return <Navigate to="/login" replace />;
+    return (
+      <div>
+        Loading...
+      </div>
+    );
+
+  }
+
+  if (!user) {
+
+    return (
+      <Navigate
+        to="/login"
+        replace
+      />
+    );
+
+  }
+
+  if (
+    !allowed.includes(user.role)
+  ) {
+
+    return (
+      <Navigate
+        to="/login"
+        replace
+      />
+    );
+
+  }
 
   return children;
+
 }
 
-/* ---------------------------------------
-   MAIN ROUTER
----------------------------------------- */
+/* =========================================
+   MAIN APP
+========================================= */
 export default function App() {
+
   return (
     <AuthProvider>
+
       <BrowserRouter>
+
         <Routes>
 
-          {/* PUBLIC ROUTES */}
-          <Route path="/" element={<Navigate to="/login" replace />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/change-password" element={<ChangePassword />} />
+          {/* PUBLIC */}
+          <Route
+            path="/"
+            element={
+              <Navigate
+                to="/login"
+                replace
+              />
+            }
+          />
 
-          {/* ========================================
-               STUDENT ROUTES
-          ========================================= */}
+          <Route
+            path="/login"
+            element={<Login />}
+          />
+
+          <Route
+            path="/signup"
+            element={<Signup />}
+          />
+
+          <Route
+            path="/change-password"
+            element={
+              <ChangePassword />
+            }
+          />
+
+          {/* =====================================
+              STUDENT
+          ===================================== */}
+
           <Route
             path="/student"
             element={
-              <ProtectedRoute allowed={["student"]}>
+              <ProtectedRoute
+                allowed={[
+                  "student",
+                ]}
+              >
                 <StudentDashboard />
               </ProtectedRoute>
             }
@@ -99,7 +181,11 @@ export default function App() {
           <Route
             path="/student/profile"
             element={
-              <ProtectedRoute allowed={["student"]}>
+              <ProtectedRoute
+                allowed={[
+                  "student",
+                ]}
+              >
                 <Profile />
               </ProtectedRoute>
             }
@@ -108,7 +194,11 @@ export default function App() {
           <Route
             path="/student/forms"
             element={
-              <ProtectedRoute allowed={["student"]}>
+              <ProtectedRoute
+                allowed={[
+                  "student",
+                ]}
+              >
                 <FormsList />
               </ProtectedRoute>
             }
@@ -117,7 +207,11 @@ export default function App() {
           <Route
             path="/student/form/:id"
             element={
-              <ProtectedRoute allowed={["student"]}>
+              <ProtectedRoute
+                allowed={[
+                  "student",
+                ]}
+              >
                 <FormView />
               </ProtectedRoute>
             }
@@ -126,17 +220,24 @@ export default function App() {
           <Route
             path="/student/submissions"
             element={
-              <ProtectedRoute allowed={["student"]}>
+              <ProtectedRoute
+                allowed={[
+                  "student",
+                ]}
+              >
                 <Submissions />
               </ProtectedRoute>
             }
           />
 
-          {/* NOTE: path matches your existing links (/student/studentuploadmarks) */}
           <Route
             path="/student/upload-marks"
             element={
-              <ProtectedRoute allowed={["student"]}>
+              <ProtectedRoute
+                allowed={[
+                  "student",
+                ]}
+              >
                 <StudentUploadMarks />
               </ProtectedRoute>
             }
@@ -145,7 +246,11 @@ export default function App() {
           <Route
             path="/student/messages"
             element={
-              <ProtectedRoute allowed={["student"]}>
+              <ProtectedRoute
+                allowed={[
+                  "student",
+                ]}
+              >
                 <StudentMessages />
               </ProtectedRoute>
             }
@@ -154,7 +259,11 @@ export default function App() {
           <Route
             path="/student/meeting-request"
             element={
-              <ProtectedRoute allowed={["student"]}>
+              <ProtectedRoute
+                allowed={[
+                  "student",
+                ]}
+              >
                 <StudentMeetingForm />
               </ProtectedRoute>
             }
@@ -163,28 +272,121 @@ export default function App() {
           <Route
             path="/student/meetings"
             element={
-              <ProtectedRoute allowed={["student"]}>
+              <ProtectedRoute
+                allowed={[
+                  "student",
+                ]}
+              >
                 <StudentMeetings />
               </ProtectedRoute>
             }
           />
 
           <Route
-  path="/student/notifications"
+            path="/student/notifications"
+            element={
+              <ProtectedRoute
+                allowed={[
+                  "student",
+                ]}
+              >
+                <Notifications />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* =====================================
+              PHD ROUTES
+          ===================================== */}
+
+          <Route
+            path="/phd"
+            element={
+              <ProtectedRoute
+                allowed={[
+                  "student",
+                ]}
+              >
+                <PhdDashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/phd/research"
+            element={
+              <ProtectedRoute
+                allowed={[
+                  "student",
+                ]}
+              >
+                <ResearchProgress />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/phd/publications"
+            element={
+              <ProtectedRoute
+                allowed={[
+                  "student",
+                ]}
+              >
+                <Publications />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/phd/thesis"
+            element={
+              <ProtectedRoute
+                allowed={[
+                  "student",
+                ]}
+              >
+                <ThesisTracking />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/phd/meetings"
+            element={
+              <ProtectedRoute
+                allowed={[
+                  "student",
+                ]}
+              >
+                <PhdMeetings />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+  path="/phd/profile"
   element={
-    <ProtectedRoute allowed={["student"]}>
-      <Notifications />
+    <ProtectedRoute
+      allowed={["student"]}
+    >
+      <PhdProfile />
     </ProtectedRoute>
   }
 />
 
-          {/* ========================================
-               MENTOR ROUTES
-          ========================================= */}
+          {/* =====================================
+              MENTOR
+          ===================================== */}
+
           <Route
             path="/mentor"
             element={
-              <ProtectedRoute allowed={["mentor"]}>
+              <ProtectedRoute
+                allowed={[
+                  "mentor",
+                ]}
+              >
                 <MentorDashboard />
               </ProtectedRoute>
             }
@@ -193,7 +395,11 @@ export default function App() {
           <Route
             path="/mentor/students"
             element={
-              <ProtectedRoute allowed={["mentor"]}>
+              <ProtectedRoute
+                allowed={[
+                  "mentor",
+                ]}
+              >
                 <MentorStudents />
               </ProtectedRoute>
             }
@@ -202,25 +408,37 @@ export default function App() {
           <Route
             path="/mentor/messages"
             element={
-              <ProtectedRoute allowed={["mentor"]}>
+              <ProtectedRoute
+                allowed={[
+                  "mentor",
+                ]}
+              >
                 <MentorMessages />
               </ProtectedRoute>
             }
           />
 
-<Route
-  path="/mentor/requests"
-  element={
-    <ProtectedRoute allowed={["mentor"]}>
-      <MentorMeetingRequests />
-    </ProtectedRoute>
-  }
-/>
+          <Route
+            path="/mentor/requests"
+            element={
+              <ProtectedRoute
+                allowed={[
+                  "mentor",
+                ]}
+              >
+                <MentorMeetingRequests />
+              </ProtectedRoute>
+            }
+          />
 
           <Route
             path="/mentor/student/:id"
             element={
-              <ProtectedRoute allowed={["mentor"]}>
+              <ProtectedRoute
+                allowed={[
+                  "mentor",
+                ]}
+              >
                 <MentorStudentProfile />
               </ProtectedRoute>
             }
@@ -229,7 +447,11 @@ export default function App() {
           <Route
             path="/mentor/semester-results"
             element={
-              <ProtectedRoute allowed={["mentor"]}>
+              <ProtectedRoute
+                allowed={[
+                  "mentor",
+                ]}
+              >
                 <MentorSemesterResults />
               </ProtectedRoute>
             }
@@ -238,19 +460,28 @@ export default function App() {
           <Route
             path="/mentor/meeting-history"
             element={
-              <ProtectedRoute allowed={["mentor"]}>
+              <ProtectedRoute
+                allowed={[
+                  "mentor",
+                ]}
+              >
                 <MentorMeetingHistory />
               </ProtectedRoute>
             }
           />
 
-          {/* ========================================
-               HOD ROUTES
-          ========================================= */}
+          {/* =====================================
+              HOD
+          ===================================== */}
+
           <Route
             path="/hod"
             element={
-              <ProtectedRoute allowed={["hod"]}>
+              <ProtectedRoute
+                allowed={[
+                  "hod",
+                ]}
+              >
                 <HodDashboard />
               </ProtectedRoute>
             }
@@ -259,7 +490,11 @@ export default function App() {
           <Route
             path="/hod/assign-mentor"
             element={
-              <ProtectedRoute allowed={["hod"]}>
+              <ProtectedRoute
+                allowed={[
+                  "hod",
+                ]}
+              >
                 <AssignMentor />
               </ProtectedRoute>
             }
@@ -268,29 +503,41 @@ export default function App() {
           <Route
             path="/hod/upload-students"
             element={
-              <ProtectedRoute allowed={["hod"]}>
+              <ProtectedRoute
+                allowed={[
+                  "hod",
+                ]}
+              >
                 <HodUploadStudents />
               </ProtectedRoute>
             }
           />
 
-            <Route
+          <Route
             path="/hod/upload-mentors"
             element={
-              <ProtectedRoute allowed={["hod"]}>
+              <ProtectedRoute
+                allowed={[
+                  "hod",
+                ]}
+              >
                 <HodUploadMentors />
               </ProtectedRoute>
             }
           />
 
-      
-          {/* ========================================
-               ADMIN ROUTES
-          ========================================= */}
+          {/* =====================================
+              ADMIN
+          ===================================== */}
+
           <Route
             path="/admin"
             element={
-              <ProtectedRoute allowed={["admin"]}>
+              <ProtectedRoute
+                allowed={[
+                  "admin",
+                ]}
+              >
                 <AdminDashboard />
               </ProtectedRoute>
             }
@@ -299,7 +546,11 @@ export default function App() {
           <Route
             path="/admin/users"
             element={
-              <ProtectedRoute allowed={["admin"]}>
+              <ProtectedRoute
+                allowed={[
+                  "admin",
+                ]}
+              >
                 <ManageUsers />
               </ProtectedRoute>
             }
@@ -308,35 +559,45 @@ export default function App() {
           <Route
             path="/admin/courses"
             element={
-              <ProtectedRoute allowed={["admin"]}>
+              <ProtectedRoute
+                allowed={[
+                  "admin",
+                ]}
+              >
                 <AdminCourses />
               </ProtectedRoute>
             }
           />
 
           <Route
-  path="/phd"
-  element={
-    <ProtectedRoute allowed={["student"]}>
-      <PhdDashboard />
-    </ProtectedRoute>
-  }
-/>
-
-<Route
-  path="/admin/create-user"
-  element={
-    <ProtectedRoute allowed={["admin"]}>
-      <CreateUser />
-    </ProtectedRoute>
-  }
-/>
-
+            path="/admin/create-user"
+            element={
+              <ProtectedRoute
+                allowed={[
+                  "admin",
+                ]}
+              >
+                <CreateUser />
+              </ProtectedRoute>
+            }
+          />
 
           {/* FALLBACK */}
-          <Route path="*" element={<Navigate to="/login" replace />} />
+          <Route
+            path="*"
+            element={
+              <Navigate
+                to="/login"
+                replace
+              />
+            }
+          />
+
         </Routes>
+
       </BrowserRouter>
+
     </AuthProvider>
   );
+
 }

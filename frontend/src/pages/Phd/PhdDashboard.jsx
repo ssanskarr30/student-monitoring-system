@@ -7,140 +7,176 @@ import {
 import { AuthContext }
 from "../../context/AuthContext";
 
+import PhdLayout
+from "../../layouts/PhdLayout";
+
 export default function PhdDashboard() {
 
   const { user } =
     useContext(AuthContext);
 
   return (
+    <PhdLayout>
 
-    <div className="dashboard-container">
+      <div className="top-navbar">
 
-      <div className="main-section">
+        <div>
 
-        <div className="top-navbar">
+          <h2 className="welcome-title">
+            Welcome,
+            {" "}
+            {user?.name}
+          </h2>
 
-          <div>
-
-            <h2 className="welcome-title">
-              🎓 PhD Research Portal
-            </h2>
-
-            <p className="welcome-sub">
-              Welcome,
-              {" "}
-              {user?.name}
-            </p>
-
-          </div>
-
-        </div>
-
-        <h1
-          className="page-title"
-          style={{
-            marginTop: "20px",
-          }}
-        >
-          PhD Dashboard
-        </h1>
-
-        <div
-          className="card-grid"
-          style={{
-            marginTop: "30px",
-          }}
-        >
-
-          <div className="dashboard-card">
-
-            <h2>
-              📚 Research Area
-            </h2>
-
-            <p>
-              {user?.researchArea ||
-                "Not Added"}
-            </p>
-
-          </div>
-
-          <div className="dashboard-card">
-
-            <h2>
-              🧪 Research Topic
-            </h2>
-
-            <p>
-              {user?.researchTopic ||
-                "Not Added"}
-            </p>
-
-          </div>
-
-          <div className="dashboard-card">
-
-            <h2>
-              👨‍🏫 Supervisor
-            </h2>
-
-            <p>
-              {user?.supervisorName ||
-                "Not Assigned"}
-            </p>
-
-          </div>
-
-          <div className="dashboard-card">
-
-            <h2>
-              📄 Publications
-            </h2>
-
-            <strong>
-              {user?.publications || 0}
-            </strong>
-
-          </div>
-
-          <div className="dashboard-card">
-
-            <h2>
-              ✅ Synopsis
-            </h2>
-
-            <p>
-
-              {user?.synopsisApproved
-                ? "Approved"
-                : "Pending"}
-
-            </p>
-
-          </div>
-
-          <div className="dashboard-card">
-
-            <h2>
-              📘 Thesis
-            </h2>
-
-            <p>
-
-              {user?.thesisSubmitted
-                ? "Submitted"
-                : "Not Submitted"}
-
-            </p>
-
-          </div>
+          <p className="welcome-sub">
+            PhD Research Monitoring Dashboard
+          </p>
 
         </div>
 
       </div>
 
-    </div>
+      <h1
+        className="page-title"
+        style={{
+          marginTop: "20px",
+        }}
+      >
+        PhD Scholar Dashboard
+      </h1>
 
+      <div className="card-grid">
+
+        {/* RESEARCH AREA */}
+        <div
+          className="dashboard-card phd-card"
+        >
+
+          <h2>
+            🔬 Research Area
+          </h2>
+
+          <p>
+            {
+              user?.researchArea ||
+              "Not Updated"
+            }
+          </p>
+
+        </div>
+
+        {/* RESEARCH TOPIC */}
+        <div
+          className="dashboard-card phd-card"
+        >
+
+          <h2>
+            📘 Research Topic
+          </h2>
+
+          <p>
+            {
+              user?.researchTopic ||
+              "Not Updated"
+            }
+          </p>
+
+        </div>
+
+        {/* SUPERVISOR */}
+        <div
+          className="dashboard-card phd-card"
+        >
+
+          <h2>
+            👨‍🏫 Supervisor
+          </h2>
+
+          <p>
+            {
+              user?.supervisorName ||
+              "Not Assigned"
+            }
+          </p>
+
+          <p>
+            {
+              user?.supervisorEmail
+            }
+          </p>
+
+        </div>
+
+        {/* PUBLICATIONS */}
+        <div
+          className="dashboard-card phd-card"
+        >
+
+          <h2>
+            📚 Publications
+          </h2>
+
+          <strong>
+            {
+              user?.publications || 0
+            }
+          </strong>
+
+        </div>
+
+        {/* SYNOPSIS */}
+        <div
+          className="dashboard-card phd-card"
+        >
+
+          <h2>
+            📝 Synopsis Status
+          </h2>
+
+          <span
+            className={`badge ${
+              user?.synopsisApproved
+                ? "badge-green"
+                : "badge-red"
+            }`}
+          >
+            {
+              user?.synopsisApproved
+                ? "APPROVED"
+                : "PENDING"
+            }
+          </span>
+
+        </div>
+
+        {/* THESIS */}
+        <div
+          className="dashboard-card phd-card"
+        >
+
+          <h2>
+            📄 Thesis Submission
+          </h2>
+
+          <span
+            className={`badge ${
+              user?.thesisSubmitted
+                ? "badge-green"
+                : "badge-yellow"
+            }`}
+          >
+            {
+              user?.thesisSubmitted
+                ? "SUBMITTED"
+                : "IN PROGRESS"
+            }
+          </span>
+
+        </div>
+
+      </div>
+
+    </PhdLayout>
   );
 
 }

@@ -41,6 +41,9 @@ export default function Login() {
     setLoading] =
       useState(false);
 
+  /* =====================================
+     LOGIN
+  ===================================== */
   const handleSubmit =
     async (e) => {
 
@@ -76,9 +79,14 @@ export default function Login() {
 
         }
 
+        /* =========================
+           PHD CHECK
+        ========================= */
+
         if (
           role === "phd" &&
-          user.studentType !== "phd"
+          user.studentType !==
+            "phd"
         ) {
 
           throw new Error(
@@ -86,6 +94,10 @@ export default function Login() {
           );
 
         }
+
+        /* =========================
+           PASSWORD RESET
+        ========================= */
 
         if (
           user.mustChangePassword ||
@@ -100,18 +112,15 @@ export default function Login() {
 
         }
 
+        /* =========================
+           REDIRECTS
+        ========================= */
+
         if (
-          user.role === "student" &&
-          user.studentType === "btech"
-        ) {
-
-          navigate("/student");
-
-        }
-
-        else if (
-          user.role === "student" &&
-          user.studentType === "phd"
+          user.role ===
+            "student" &&
+          user.studentType ===
+            "phd"
         ) {
 
           navigate("/phd");
@@ -119,15 +128,30 @@ export default function Login() {
         }
 
         else if (
-          user.role === "mentor"
+          user.role ===
+            "student"
         ) {
 
-          navigate("/mentor");
+          navigate(
+            "/student"
+          );
 
         }
 
         else if (
-          user.role === "hod"
+          user.role ===
+            "mentor"
+        ) {
+
+          navigate(
+            "/mentor"
+          );
+
+        }
+
+        else if (
+          user.role ===
+            "hod"
         ) {
 
           navigate("/hod");
@@ -136,7 +160,9 @@ export default function Login() {
 
         else {
 
-          navigate("/admin");
+          navigate(
+            "/admin"
+          );
 
         }
 
@@ -157,18 +183,26 @@ export default function Login() {
   return (
     <div className="login-page">
 
+      {/* GLOW */}
+      <div className="login-glow-1" />
+
+      <div className="login-glow-2" />
+
+      {/* CARD */}
       <div className="login-card">
 
+        {/* HEADER */}
         <div
           style={{
             textAlign: "center",
-            marginBottom: "25px",
+            marginBottom: "28px",
           }}
         >
 
           <div
             style={{
-              fontSize: "60px",
+              fontSize: "64px",
+              marginBottom: "10px",
             }}
           >
             🎓
@@ -184,6 +218,7 @@ export default function Login() {
 
         </div>
 
+        {/* ERROR */}
         {error && (
 
           <div className="login-error">
@@ -192,15 +227,17 @@ export default function Login() {
 
         )}
 
+        {/* FORM */}
         <form
           onSubmit={handleSubmit}
           className="login-form"
         >
 
+          {/* EMAIL */}
           <div className="input-group">
 
             <label>
-              Email
+              Institutional Email
             </label>
 
             <input
@@ -217,6 +254,7 @@ export default function Login() {
 
           </div>
 
+          {/* PASSWORD */}
           <div className="input-group">
 
             <label>
@@ -237,6 +275,7 @@ export default function Login() {
 
           </div>
 
+          {/* ROLE */}
           <div className="input-group">
 
             <label>
@@ -276,6 +315,7 @@ export default function Login() {
 
           </div>
 
+          {/* BUTTON */}
           <button
             className="login-btn"
             disabled={loading}
@@ -289,6 +329,7 @@ export default function Login() {
 
         </form>
 
+        {/* FOOTER */}
         <div className="login-footer">
 
           Don’t have an account?

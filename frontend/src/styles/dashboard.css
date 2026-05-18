@@ -1271,3 +1271,252 @@
   padding: 24px;
   color: #6b7280;
 }
+
+/* =========================================
+   PHD PORTAL
+========================================= */
+
+.phd-sidebar {
+  background: linear-gradient(
+    180deg,
+    #111827,
+    #1f2937
+  );
+}
+
+.phd-sidebar .sidebar-title {
+  color: #f9fafb;
+}
+
+.phd-sidebar .sidebar-link {
+  color: #d1d5db;
+}
+
+.phd-sidebar .sidebar-link:hover {
+  background: rgba(
+    255,
+    255,
+    255,
+    0.08
+  );
+
+  color: white;
+}
+
+.phd-sidebar .sidebar-link.active {
+  background: linear-gradient(
+    135deg,
+    #7c3aed,
+    #5b21b6
+  );
+
+  color: white;
+}
+
+/* =========================================
+   PHD CARDS
+========================================= */
+
+.phd-card {
+  position: relative;
+
+  overflow: hidden;
+
+  border: 1px solid
+    rgba(124, 58, 237, 0.12);
+
+  background: linear-gradient(
+    135deg,
+    #ffffff,
+    #faf7ff
+  );
+}
+
+.phd-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 4px;
+
+  background: linear-gradient(
+    90deg,
+    #7c3aed,
+    #2563eb
+  );
+}
+
+.phd-card h2 {
+  color: #4c1d95;
+}
+
+.phd-card strong {
+  font-size: 34px;
+
+  color: #5b21b6;
+}
+
+/* =========================================
+   PHD BADGES
+========================================= */
+
+.badge-green {
+  background: #dcfce7;
+
+  color: #166534;
+
+  padding: 8px 14px;
+
+  border-radius: 10px;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+.badge-red {
+  background: #fee2e2;
+
+  color: #991b1b;
+
+  padding: 8px 14px;
+
+  border-radius: 10px;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+.badge-yellow {
+  background: #fef3c7;
+
+  color: #92400e;
+
+  padding: 8px 14px;
+
+  border-radius: 10px;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+/* =========================================
+   RESEARCH SECTIONS
+========================================= */
+
+.research-box {
+  background: white;
+
+  border-radius: 18px;
+
+  padding: 28px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0,0,0,0.06);
+
+  margin-top: 24px;
+}
+
+.research-box h2 {
+  margin-bottom: 18px;
+
+  color: #4c1d95;
+}
+
+.research-item {
+  background: #f5f3ff;
+
+  border-left: 4px solid
+    #7c3aed;
+
+  padding: 16px;
+
+  border-radius: 10px;
+
+  margin-bottom: 14px;
+}
+
+/* =========================================
+   THESIS TRACKER
+========================================= */
+
+.thesis-progress {
+  width: 100%;
+
+  height: 14px;
+
+  border-radius: 999px;
+
+  background: #e5e7eb;
+
+  overflow: hidden;
+
+  margin-top: 12px;
+}
+
+.thesis-progress-fill {
+  height: 100%;
+
+  background: linear-gradient(
+    90deg,
+    #7c3aed,
+    #2563eb
+  );
+
+  border-radius: 999px;
+}
+
+/* =========================================
+   PUBLICATIONS
+========================================= */
+
+.publication-card {
+  background: linear-gradient(
+    135deg,
+    #ede9fe,
+    #dbeafe
+  );
+
+  padding: 24px;
+
+  border-radius: 18px;
+
+  margin-top: 24px;
+}
+
+.publication-count {
+  font-size: 52px;
+
+  font-weight: 800;
+
+  color: #4c1d95;
+}
+
+/* =========================================
+   PHD RESPONSIVE
+========================================= */
+
+@media screen and (
+  max-width: 768px
+) {
+
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
