@@ -95,6 +95,17 @@ export default function Login() {
 
         }
 
+        if (
+  role === "student" &&
+  user.studentType === "phd"
+) {
+
+  throw new Error(
+    "Please login using PhD Scholar option"
+  );
+
+}
+
         /* =========================
            PASSWORD RESET
         ========================= */
